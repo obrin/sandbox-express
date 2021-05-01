@@ -2,7 +2,7 @@ env:
   KUBE_CONTEXT: nuc
   APP: sandbox-express
   TAG: ${BUILDKITE_COMMIT}
-  IMAGE: ${APP}:${TAG}
+  IMAGE: jordanyong/${APP}:${TAG}
 steps:
   - label: ':docker: Build & Push'
     command: pack build ${IMAGE} --builder gcr.io/buildpacks/builder:v1 && docker push ${IMAGE}
