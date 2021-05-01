@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: https://obrin.github.io/helm-charts/
+  version: 0.1.5
+digest: sha256:9496901f8868ff8f71247be536b6ddc0b3e2070487867faf683ddc25f7513742
+generated: "2021-05-01T20:46:55.33286+02:00"

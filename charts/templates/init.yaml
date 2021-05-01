@@ -1,0 +1,7 @@
+{{ include "common.deployment" (dict "top" . "deployment" .Values.mainDeployment) }}
+---
+{{ include "common.service" (dict "top" . "service" .Values.service) }}
+---
+{{ include "common.gateway" (dict "top" . "gateway" .Values.gateway) }}
+---
+{{ include "common.vs" (dict "top" . "vs" .Values.vs) }}

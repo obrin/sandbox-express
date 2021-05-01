@@ -1,0 +1,47 @@
+mainDeployment:
+  replicaCount: 2
+  containers:
+    app:
+      pullPolicy: IfNotPresent
+      image:
+        repository: jordanyong/sandbox-express
+      ports:
+        - name: http
+          containerPort: 8080
+      resources:
+        limits:
+          cpu: 50m
+          memory: 64Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+
+service:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+
+gateway:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - 'sandbox-express.home.local'
+
+vs:
+  hosts:
+    - 'sandbox-express.home.local'
+  gateways:
+    - sandbox-express
+  http:
+    - route:
+      - destination:
+          host: sandbox-express
+          port:
+            number: 80
