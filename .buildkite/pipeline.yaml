@@ -1,11 +1,13 @@
 env:
   KUBE_CONTEXT: nuc
   APP: sandbox-express
+  TAG: ${BUILDKITE_COMMIT}
+  IMAGE: jordanyong/${APP}:${TAG}
 steps:
   - label: ':docker: Build & Push'
-    command: make build && make publish
+    command: pack build ${IMAGE} --builder gcr.io/buildpacks/builder:v1 && docker push ${IMAGE}
 
   - wait
 
   - label: ':rocket: Deploy'
-    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${BUILDKITE_COMMIT} --create-namespace --namespace ${APP} ${APP} charts/ 
+    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${TAG} --create-namespace --namespace ${APP} ${APP} charts/ 
