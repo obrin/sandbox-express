@@ -8,4 +8,4 @@ steps:
   - wait
 
   - label: ':rocket: Deploy'
-    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${BUILDKITE_COMMIT} --namespace ${APP} ${APP} charts/ 
+    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${BUILDKITE_COMMIT} --create-namespace --namespace ${APP} ${APP} charts/ 
