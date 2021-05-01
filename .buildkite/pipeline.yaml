@@ -1,0 +1,11 @@
+env:
+  KUBE_CONTEXT: nuc
+  APP: sandbox-express
+steps:
+  - label: ':docker: Build & Push'
+    command: make build && make publish
+
+  - wait
+
+  - label: ':rocket: Deploy'
+    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${BUILDKITE_COMMIT} --namespace  ${APP} charts/ 
