@@ -4,10 +4,15 @@ env:
   TAG: ${BUILDKITE_COMMIT}
   IMAGE: jordanyong/${APP}:${TAG}
 steps:
-  - label: ':docker: Build & Push'
-    command: pack build ${IMAGE} --builder gcr.io/buildpacks/builder:v1 && docker push ${IMAGE}
+  - command: ls
+    plugins:
+      - ssh://git@github.com:obrin/buildkite-deploy-plugin.git#v1.0.0:
+          pattern: "*.md"
 
-  - wait
-
-  - label: ':rocket: Deploy'
-    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${TAG} --create-namespace --namespace ${APP} ${APP} charts/ 
+  # - label: ":rocket: Deploying to development"
+  #   branches: "deploy/*"
+  #   plugins:
+  #     - ssh://git@github.csnzoo.com/secure/deploy-buildkite-plugin.git#v<maj>.<min>.<patch>:
+  #         environment: "dev"
+  #   agents:
+  #     queue: docker_prod
