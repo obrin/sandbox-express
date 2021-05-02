@@ -8,4 +8,4 @@ appVersion: 0.0.1
 dependencies:
   - name: common
     version: ~0.1.5
-    repository: https://obrin.github.io/helm-charts/
+    repository: https://obrin.github.io/helm/
