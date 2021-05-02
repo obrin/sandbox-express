@@ -4,15 +4,11 @@ env:
   TAG: ${BUILDKITE_COMMIT}
   IMAGE: jordanyong/${APP}:${TAG}
 steps:
-  - command: ls
-    plugins:
-      - ssh://git@github.com:obrin/buildkite-deploy-plugin.git#v1.0.0:
-          pattern: "*.md"
+  - label: ':docker: Build & Push'
+    command: pack build ${IMAGE} --builder gcr.io/buildpacks/builder:v1 && docker push ${IMAGE}
 
-  # - label: ":rocket: Deploying to development"
-  #   branches: "deploy/*"
-  #   plugins:
-  #     - ssh://git@github.csnzoo.com/secure/deploy-buildkite-plugin.git#v<maj>.<min>.<patch>:
-  #         environment: "dev"
-  #   agents:
-  #     queue: docker_prod
+  - wait
+
+  - label: ':rocket: Deploy'
+    plugins:
+      - https://github.com/obrin/buildkite-deploy-plugin.git#v1.0.9:
