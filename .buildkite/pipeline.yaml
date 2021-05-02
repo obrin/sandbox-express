@@ -10,4 +10,5 @@ steps:
   - wait
 
   - label: ':rocket: Deploy'
-    command: helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${TAG} --create-namespace --namespace ${APP} ${APP} charts/ 
+    plugins:
+      - https://github.com/obrin/buildkite-deploy-plugin.git#v1.0.9:
