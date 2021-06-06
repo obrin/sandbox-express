@@ -45,3 +45,18 @@ vs:
           host: sandbox-express
           port:
             number: 80
+
+# service:
+#   type: LoadBalancer
+#   ports:
+#     - port: 80
+#       targetPort: 8080
+#       protocol: TCP
+#       name: http
+
+# ingress:
+#   hosts:
+#     - host: express.home.local
+#       paths:
+#         - path: /(.*)
+#           servicePort: 80
