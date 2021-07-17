@@ -10,6 +10,7 @@
     "start": "node server"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "unleash-client": "^3.8.1"
   }
 }
